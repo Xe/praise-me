@@ -96,7 +96,7 @@ export default function PraiseBox() {
                                             <a
                                                 href={`https://x.com/intent/post?text=${
                                                     encodeURIComponent(
-                                                        `${praiseMessage.data.name}'s GitHub encouragement: ${
+                                                        `${praiseMessage.data.username}'s GitHub encouragement: ${
                                                             document
                                                                 .getElementById(
                                                                     "praise-message",
