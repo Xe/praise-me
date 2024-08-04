@@ -83,7 +83,14 @@ export default function Footer() {
               class="underline text-gray-900 dark:text-gray-50 hover:text-gray-500"
             >
               remove your info
-            </a>.
+            </a>. The{" "}
+            <a
+              class="underline text-gray-900 dark:text-gray-50 hover:text-gray-500"
+              href="https://github.com/Xe/praise-me"
+            >
+              source code
+            </a>{" "}
+            is on GitHub.
           </p>
         </div>
       </div>

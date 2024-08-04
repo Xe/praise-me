@@ -1,6 +1,7 @@
 import { useEffect, useState } from "preact/hooks";
 import { Button } from "@/components/Button.tsx";
 import { Data } from "@/lib/praise.ts";
+import { convert } from "npm:html-to-text";
 
 interface ServerResponse {
     data: Data;
@@ -97,10 +98,14 @@ export default function PraiseBox() {
                                                 href={`https://x.com/intent/post?text=${
                                                     encodeURIComponent(
                                                         `${praiseMessage.data.username}'s GitHub encouragement: ${
-                                                            document
-                                                                .getElementById(
-                                                                    "praise-message",
-                                                                )?.innerText
+                                                            convert(
+                                                                praiseMessage
+                                                                    .praise,
+                                                                {
+                                                                    wordWrap:
+                                                                        256,
+                                                                },
+                                                            )
                                                                 .substring(
                                                                     0,
                                                                     100,
