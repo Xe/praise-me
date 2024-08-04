@@ -90,7 +90,8 @@ export default function Footer() {
             >
               source code
             </a>{" "}
-            is on GitHub.
+            is on GitHub. Also check me out on{" "}
+            <a href="https://patreon.com/cadey">Patreon</a>!
           </p>
         </div>
       </div>
