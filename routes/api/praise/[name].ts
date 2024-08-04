@@ -1,11 +1,7 @@
 import { FreshContext } from "$fresh/server.ts";
 import { Client as OllamaClient } from "@/lib/ollama.ts";
 import { Data } from "@/lib/praise.ts";
-import {
-  ParseFlags,
-  parseMarkdown,
-} from "https://deno.land/x/markdown_wasm@1.2.2/mod.ts";
-import { render } from "https://deno.land/x/gfm/mod.ts";
+import { render } from "https://deno.land/x/gfm@0.6.0/mod.ts";
 
 const kv = await Deno.openKv();
 const ollama = new OllamaClient("http://xe-inference.flycast");

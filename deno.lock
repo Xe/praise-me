@@ -1158,7 +1158,11 @@
   },
   "redirects": {
     "https://deno.land/x/gfm/mod.ts": "https://deno.land/x/gfm@0.6.0/mod.ts",
-    "https://esm.sh/v135/@types/babel__helper-validator-identifier@~7/index.d.ts": "https://esm.sh/v135/@types/babel__helper-validator-identifier@7.15.2/index.d.ts"
+    "https://esm.sh/v135/@types/babel__helper-validator-identifier@~7/index.d.ts": "https://esm.sh/v135/@types/babel__helper-validator-identifier@7.15.2/index.d.ts",
+    "https://esm.sh/v135/@types/he@~1.2/index.d.ts": "https://esm.sh/v135/@types/he@1.2.3/index.d.ts",
+    "https://esm.sh/v135/@types/katex@~0.16/index.d.ts": "https://esm.sh/v135/@types/katex@0.16.7/index.d.ts",
+    "https://esm.sh/v135/@types/prismjs@^1/index.d.ts": "https://esm.sh/v135/@types/prismjs@1.26.4/index.d.ts",
+    "https://esm.sh/v135/@types/sanitize-html@^2/index.d.ts": "https://esm.sh/v135/@types/sanitize-html@2.11.0/index.d.ts"
   },
   "remote": {
     "https://deno.land/std@0.208.0/assert/assert.ts": "9a97dad6d98c238938e7540736b826440ad8c1c1e54430ca4c4e623e585607ee",
@@ -1443,6 +1447,7 @@
     "https://deno.land/x/emoji@0.3.0/all.json": "f0553b660db5e44e71ca46f637a06c2ec94f34445a920fcf319858094a91f46b",
     "https://deno.land/x/emoji@0.3.0/emoji.ts": "ad21fa393b2b96fb5999f58dec18e13628cc5d11aa370c42a2f7cc8e135d43d8",
     "https://deno.land/x/emoji@0.3.0/mod.ts": "9ef5a2fca1a633f29747b6d3254afd19545cef586128a8213a1003ee2808186d",
+    "https://deno.land/x/emoji@0.3.0/types.ts": "5897345f500088c719a35388c5b192bc5d93fc2c13e37d94eafa8ff3480edd17",
     "https://deno.land/x/emoji@0.3.0/unicode.ts": "ac8079e8e1da66ae9e601c1fdd0e7641120c2b07ca7bd2875e65fe23e16e6199",
     "https://deno.land/x/esbuild@v0.20.2/mod.js": "67c608ee283233f5d0faa322b887356857c547a8e6a00981f798b2cd38e02436",
     "https://deno.land/x/esbuild@v0.20.2/wasm.js": "5a887c1e38ad1056af11c58d45b6084d33bd33a62afa480d805801739370eed0",
