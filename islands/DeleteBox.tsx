@@ -55,7 +55,7 @@ export default function DeleteBox() {
                         <input
                             type="text"
                             placeholder="GitHub username"
-                            className="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                            className="w-full px-3 py-2 border dark:bg-black border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
                             disabled={loading}
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
