@@ -1,6 +1,6 @@
 import { FreshContext } from "$fresh/server.ts";
 import { Client as OllamaClient } from "@/lib/ollama.ts";
-import { Data } from "@/lib/praise.ts";
+import { Data, Repository } from "@/lib/praise.ts";
 import { render } from "https://deno.land/x/gfm@0.6.0/mod.ts";
 
 const kv = await Deno.openKv();
@@ -18,6 +18,7 @@ const prompt = (
     followers,
     following,
     readme,
+    repositories
   }: Data,
 ): string =>
   `Give uplifting words of encouragement for the following github profile. Use two newlines between paragraphs.
@@ -34,7 +35,24 @@ Following: ${following}
 
 Readme:
 
-${readme}`;
+${readme}
+
+Projects:
+
+${repositories}`;
+
+const stringifyRepo = ({
+  name,
+  description,
+  stargazers,
+  language
+}: Repository): string => 
+`{
+  Project Name: ${name}
+  Description: ${description}
+  Stars: ${stargazers}
+  Language: ${language}
+}`;
 
 const getGitHubInfo = async (username: string) => {
   const cached = await kv.get(["github", "profile", username]);
@@ -56,6 +74,44 @@ const getGitHubInfo = async (username: string) => {
   await kv.set(["github", "profile", username], data);
 
   return data;
+};
+
+const getGithubRepos = async (username: string) => {
+  const cached = await kv.get(["github", "repos", username]);
+  if (cached.value !== null) {
+    return cached.value as string;
+  }
+
+  const resp = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&page=1`, {
+    headers: {
+      "Authorization": `Bearer ${githubToken}`,
+      "Accept": "application/json",
+    },
+  });
+  if (!resp.ok) {
+    throw new Error(`Can't fetch data: ${resp.status}: ${await resp.text()}`);
+  }
+  const data = await resp.json();
+
+  let repositories: Repository[] = data.map((repo: any) => {
+      return {
+        name: repo.full_name,
+        description: repo.description,
+        stargazers: repo.stargazers_count,
+        language: repo.language
+      }
+    })
+
+  // sort in descending order by the star count
+  repositories.sort((r1, r2) => r2.stargazers - r1.stargazers)
+
+  repositories = repositories.slice(0, Math.min(10, repositories.length))
+
+  const reposSummary = repositories.map(stringifyRepo).join("\n")
+
+  await kv.set(["github", "repos", username], reposSummary);
+
+  return reposSummary;
 };
 
 const getGitHubReadme = async (username: string): Promise<string> => {
@@ -138,6 +194,7 @@ export const handler = async (
 
   try {
     const info = await getGitHubInfo(username);
+    const reposSummary = await getGithubRepos(username);
     const readme = await getGitHubReadme(username);
 
     const data: Data = {
@@ -149,6 +206,7 @@ export const handler = async (
       location: info.location,
       followers: info.followers,
       following: info.following,
+      repositories: reposSummary,
       readme,
     };
 

@@ -8,4 +8,12 @@ export interface Data {
   followers: number;
   following: number;
   readme: string;
+  repositories: string;
+}
+
+export interface Repository {
+  name: string,
+  description: string,
+  stargazers: number,
+  language: string
 }
