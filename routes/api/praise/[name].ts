@@ -104,9 +104,9 @@ const getGithubRepos = async (username: string) => {
 
   // sort in descending order by the star count
   repositories.sort((r1, r2) => r2.stargazers - r1.stargazers)
-
+  // take only top 10 projects
   repositories = repositories.slice(0, Math.min(10, repositories.length))
-
+  // create a summary of all public repositories
   const reposSummary = repositories.map(stringifyRepo).join("\n")
 
   await kv.set(["github", "repos", username], reposSummary);
