@@ -178,6 +178,7 @@ export const handler = async (
     [
       ["github", "profile", username],
       ["github", "readme", username],
+      ["github", "repos", username],
       ["github", "praise", username],
     ].forEach(async (key) => {
       await kv.delete(key);
