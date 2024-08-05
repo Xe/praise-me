@@ -19,6 +19,12 @@ export default function DeletePage() {
           </a>
         </li>
         <li>
+          GitHub repositories information (what's visible in{" "}
+          <a href="https://api.github.com/users/Xe/repos">
+            <code>https://api.github.com/users/Xe/repos</code>)
+          </a>
+        </li>
+        <li>
           GitHub README information (what's visible in{" "}
           <a href="https://github.com/Xe/Xe">
             <code>https://github.com/Xe/Xe</code>
