@@ -159,6 +159,9 @@ const getPraise = async (data: Data): Promise<string> => {
     system:
       `You are an expert writer that helps people feel good about themselves and what they are doing in life.`,
     keep_alive: "60m",
+    options: {
+      "num_ctx": 4096 * 3,
+    },
   });
 
   const praise = render(resp.response);
