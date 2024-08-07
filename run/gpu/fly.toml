@@ -1,0 +1,25 @@
+app = "praise-me-gpu"
+primary_region = "sea"
+vm.size = "l40s"
+
+[build]
+image = "ollama/ollama"
+
+[mounts]
+source = "models"
+destination = "/root/.ollama"
+initial_size = "64gb"
+
+[[services]]
+auto_stop_machines = true
+auto_start_machines = true
+min_machines_running = 0
+internal_port = 11434
+[services.concurrency]
+type = "connections"
+hard_limit = 4
+soft_limit = 2
+
+[[services.ports]]
+handlers = ["http"]
+port = 80

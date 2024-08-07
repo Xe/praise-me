@@ -4,7 +4,7 @@ import { Data, Repository } from "@/lib/praise.ts";
 import { render } from "https://deno.land/x/gfm@0.6.0/mod.ts";
 
 const kv = await Deno.openKv();
-const ollama = new OllamaClient("http://xe-inference.flycast");
+const ollama = new OllamaClient("http://praise-me-gpu.flycast");
 const model = "llama3.1:70b";
 const githubToken = Deno.env.get("GITHUB_TOKEN");
 
@@ -18,7 +18,7 @@ const prompt = (
     followers,
     following,
     readme,
-    repositories
+    repositories,
   }: Data,
 ): string =>
   `Give uplifting words of encouragement for the following github profile. Use two newlines between paragraphs.
@@ -45,9 +45,9 @@ const stringifyRepo = ({
   name,
   description,
   stargazers,
-  language
-}: Repository): string => 
-`{
+  language,
+}: Repository): string =>
+  `{
   Project Name: ${name}
   Description: ${description}
   Stars: ${stargazers}
@@ -82,32 +82,35 @@ const getGithubRepos = async (username: string) => {
     return cached.value as string;
   }
 
-  const resp = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&page=1`, {
-    headers: {
-      "Authorization": `Bearer ${githubToken}`,
-      "Accept": "application/json",
+  const resp = await fetch(
+    `https://api.github.com/users/${username}/repos?per_page=100&page=1`,
+    {
+      headers: {
+        "Authorization": `Bearer ${githubToken}`,
+        "Accept": "application/json",
+      },
     },
-  });
+  );
   if (!resp.ok) {
     throw new Error(`Can't fetch data: ${resp.status}: ${await resp.text()}`);
   }
   const data = await resp.json();
 
   let repositories: Repository[] = data.map((repo: any) => {
-      return {
-        name: repo.full_name,
-        description: repo.description,
-        stargazers: repo.stargazers_count,
-        language: repo.language
-      }
-    })
+    return {
+      name: repo.full_name,
+      description: repo.description,
+      stargazers: repo.stargazers_count,
+      language: repo.language,
+    };
+  });
 
   // sort in descending order by the star count
-  repositories.sort((r1, r2) => r2.stargazers - r1.stargazers)
+  repositories.sort((r1, r2) => r2.stargazers - r1.stargazers);
   // take only top 10 projects
-  repositories = repositories.slice(0, Math.min(10, repositories.length))
+  repositories = repositories.slice(0, Math.min(10, repositories.length));
   // create a summary of all public repositories
-  const reposSummary = repositories.map(stringifyRepo).join("\n")
+  const reposSummary = repositories.map(stringifyRepo).join("\n");
 
   await kv.set(["github", "repos", username], reposSummary);
 
