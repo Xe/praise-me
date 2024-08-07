@@ -46,12 +46,14 @@ const stringifyRepo = ({
   description,
   stargazers,
   language,
+  fork,
 }: Repository): string =>
   `{
   Project Name: ${name}
   Description: ${description}
   Stars: ${stargazers}
   Language: ${language}
+  Fork: ${fork}
 }`;
 
 const getGitHubInfo = async (username: string) => {
@@ -102,8 +104,12 @@ const getGithubRepos = async (username: string) => {
       description: repo.description,
       stargazers: repo.stargazers_count,
       language: repo.language,
+      fork: repo.fork,
     };
   });
+
+  // filter out forked repositories
+  repositories = repositories.filter(repo => !repo.fork);
 
   // sort in descending order by the star count
   repositories.sort((r1, r2) => r2.stargazers - r1.stargazers);
