@@ -15,5 +15,6 @@ export interface Repository {
   name: string,
   description: string,
   stargazers: number,
-  language: string
+  language: string,
+  fork: boolean
 }
